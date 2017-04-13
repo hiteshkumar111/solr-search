@@ -1,0 +1,10 @@
+== SEARCH API DOC
+
+*This document is in development state, Few Info might change. This is the SnapShot version.+
+Note - Final Api document might differ from the current version
+
+=== Version 1.0-SNAPSHOT
+
+This document is designed to give the overview of SOLR SEARCH API version 1.0-SNAPSHOT
+
+
