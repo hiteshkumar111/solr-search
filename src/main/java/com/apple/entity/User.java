@@ -21,8 +21,12 @@ public class User {
 	@Field
 	private UserProfile profile; 
 	
+	@Field
+	private Person person;
 
 }
+
+
 
 /*
 {
