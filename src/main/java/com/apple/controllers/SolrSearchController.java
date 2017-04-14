@@ -28,7 +28,6 @@ public class SolrSearchController {
     @Autowired
     private SolrSearchService solrSearchService;
 
-
     @ApiOperation(value = "search", notes = "", response = Object.class)
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
     @RequestMapping(value = "/search",  consumes = { "*/*" }, method = RequestMethod.POST)
@@ -36,6 +35,8 @@ public class SolrSearchController {
         validatorService.validateSearchRequest(searchRequestDTO);
         return new ResponseEntity<>(solrSearchService.search(searchRequestDTO),HttpStatus.OK);
     }
+    
+    
     
     
 }
