@@ -1,10 +1,9 @@
 package com.apple.services;
 
-import com.apple.dtos.request.UserRequestDTO;
-import com.apple.dtos.response.UserResponseDTO;
+import com.apple.entity.User;
 
 public interface UserService {
 
-	UserResponseDTO save(UserRequestDTO userRequestDTO);
+	User save(User User);
 	
 }

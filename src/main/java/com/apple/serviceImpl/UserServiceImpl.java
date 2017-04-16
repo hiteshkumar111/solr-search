@@ -3,8 +3,7 @@ package com.apple.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.apple.dtos.request.UserRequestDTO;
-import com.apple.dtos.response.UserResponseDTO;
+import com.apple.entity.User;
 import com.apple.repos.UserRepository;
 import com.apple.services.UserService;
 
@@ -16,9 +15,10 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 	
 	@Override
-	public UserResponseDTO save(UserRequestDTO userRequestDTO){
+	public User save(User user){
 		//userRepository.save(null);
 		return null;
 	}
+	
 	
 }
