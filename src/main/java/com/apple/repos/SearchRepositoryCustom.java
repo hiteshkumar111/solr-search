@@ -1,13 +1,12 @@
 package com.apple.repos;
 
-import java.util.Map;
-
-import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.apple.entity.User;
+
 @Repository
-public interface SearchRepositoryCustom extends SolrCrudRepository<Object, String> {
+public interface SearchRepositoryCustom extends SolrCrudRepository<User, String> {
 	
-    Map<String,Object> search(Query query);
+   // Map<String,Object> search(Query query);
 }

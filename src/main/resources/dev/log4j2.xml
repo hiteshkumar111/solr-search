@@ -24,17 +24,6 @@
             </Policies>
             <DefaultRolloverStrategy max="4"/>
         </RollingFile>
-        <RollingFile name="sql-query-Appender" fileName="${log-path}/sql_query_app_log.log" filePattern="${log-path}/app_log.log.%i">
-            <PatternLayout>
-                <pattern>
-                    %msg%n
-                </pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="100 MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="4"/>
-        </RollingFile>
 
 
         <RollingFile name="SpringBoot-File-Appender" fileName="${log-path}/solrsearch_springboot_log.log" filePattern="${log-path}/springboot_log.log.%i" >
@@ -67,10 +56,6 @@
         </Logger>
         <Logger name="org.springframework.web" level="debug" additivity="false">
             <AppenderRef ref="SpringBoot-File-Appender"/>
-            <AppenderRef ref="App-File-Appender"/>
-        </Logger>
-        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
-            <AppenderRef ref="sql-query-Appender"/>
             <AppenderRef ref="App-File-Appender"/>
         </Logger>
         <Root>

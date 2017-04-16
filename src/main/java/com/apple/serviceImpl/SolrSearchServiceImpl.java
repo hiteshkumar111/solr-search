@@ -5,10 +5,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Query;
+import org.springframework.stereotype.Service;
 
 import com.apple.dtos.request.SearchRequestDTO;
 import com.apple.services.SolrSearchService;
 
+@Service
 public class SolrSearchServiceImpl implements SolrSearchService{
 	
 	@Autowired
@@ -16,12 +18,12 @@ public class SolrSearchServiceImpl implements SolrSearchService{
 
 	public Map<String,Object> search(SearchRequestDTO searchRequest){
 		
-		Query query = buildSearchRequest(searchRequest);
+	//	Query query = buildSearchRequest(searchRequest);
 		
-		@SuppressWarnings("unchecked")
-		Map<String, Object> result = solrTemplate.queryForObject(query, Map.class);
+		//@SuppressWarnings("unchecked")
+		//Map<String, Object> result = solrTemplate.queryForObject(query, Map.class);
 		
-		return result;
+		return null;
 	}
 
 	/**

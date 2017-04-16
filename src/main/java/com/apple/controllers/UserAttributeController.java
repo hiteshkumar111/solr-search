@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apple.dtos.request.UserRequestDTO;
 import com.apple.dtos.response.UserResponseDTO;
 import com.apple.entity.User;
-import com.apple.mapper.Imapper;
+import com.apple.mapper.UserMapper;
 import com.apple.services.UserService;
 import com.apple.services.ValidatorService;
 
@@ -27,7 +27,7 @@ public class UserAttributeController {
 	private ValidatorService validatorService;
 
 	@Autowired
-	private Imapper imapper;
+	private UserMapper mapper;
 
 	@Autowired
 	private UserService userService;
@@ -40,11 +40,11 @@ public class UserAttributeController {
 
 		User user = null;
 
-		user = imapper.map(userRequestDTO, User.class);
+		user = mapper.map(userRequestDTO, User.class);
 
 		user = userService.save(user);
 
-		return new ResponseEntity<UserResponseDTO>(imapper.map(user, UserResponseDTO.class), HttpStatus.OK);
+		return new ResponseEntity<UserResponseDTO>(mapper.map(user, UserResponseDTO.class), HttpStatus.OK);
 	}
 
 }

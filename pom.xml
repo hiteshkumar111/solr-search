@@ -44,18 +44,18 @@
 		<!--</dependency> -->
 
 		<!--Data Dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!-- HikariCP dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>2.4.7</version>
 		</dependency>
-
+ -->
 
 		<!--Web dependency -->
 		<dependency>
@@ -76,12 +76,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 
