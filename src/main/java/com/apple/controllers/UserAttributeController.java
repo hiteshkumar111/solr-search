@@ -12,7 +12,6 @@ import com.apple.dtos.request.UserRequestDTO;
 import com.apple.dtos.response.UserResponseDTO;
 import com.apple.entity.User;
 import com.apple.mapper.Imapper;
-import com.apple.repos.UserRepository;
 import com.apple.services.UserService;
 import com.apple.services.ValidatorService;
 
@@ -31,19 +30,19 @@ public class UserAttributeController {
 	private Imapper imapper;
 
 	@Autowired
-	private UserService UserService;
+	private UserService userService;
 
 	@ApiOperation(value = "save", notes = "", response = Object.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
 	@RequestMapping(value = "/", consumes = { "*/*" }, method = RequestMethod.POST)
-	public ResponseEntity<UserResponseDTO> searchTickets(@RequestBody UserRequestDTO userRequestDTO) {
+	public ResponseEntity<UserResponseDTO> saveUser(@RequestBody UserRequestDTO userRequestDTO) {
 		validatorService.validateUserSaveRequest(userRequestDTO);
 
 		User user = null;
 
 		user = imapper.map(userRequestDTO, User.class);
 
-		user = UserService.save(user);
+		user = userService.save(user);
 
 		return new ResponseEntity<UserResponseDTO>(imapper.map(user, UserResponseDTO.class), HttpStatus.OK);
 	}
