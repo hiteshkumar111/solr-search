@@ -1,9 +1,10 @@
 package com.apple.services;
 
 import com.apple.entity.User;
+import com.apple.entity.UserSolrDocument;
 
 public interface UserService {
 
-	User save(User User);
+	UserSolrDocument save(UserSolrDocument User);
 	
 }

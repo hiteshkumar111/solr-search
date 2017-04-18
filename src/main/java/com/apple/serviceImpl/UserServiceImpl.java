@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apple.entity.User;
+import com.apple.entity.UserSolrDocument;
 import com.apple.repos.UserRepository;
 import com.apple.services.UserService;
 
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public User save(User user) {
+	public UserSolrDocument save(UserSolrDocument user) {
 		userRepository.save(user);
 		return user;
 	}

@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-@SolrDocument
+@SolrDocument(solrCoreName = "userDetailsCore")
 public class User {
 
 	@Id
@@ -13,15 +13,17 @@ public class User {
 	private String id;
 
 	@Indexed(name = "name", type = "string")
+	@Field("name")
 	private String nickName;
 	
-	@Indexed(name = "avatarId", type = "string")
+	@Indexed(name = "avatarid", type = "string")
+	@Field("avatarid")
 	private String avatarId;
 	
-	@Field
+	@Field(child=true)
 	private UserProfile profile; 
 	
-	@Field
+	@Field(child=true)
 	private Person person;
 
 	public String getId() {
@@ -48,6 +50,10 @@ public class User {
 		this.avatarId = avatarId;
 	}
 
+//	public String getProfile() {
+//		return profile.toString();
+//	}
+	
 	public UserProfile getProfile() {
 		return profile;
 	}
@@ -56,10 +62,14 @@ public class User {
 		this.profile = profile;
 	}
 
+//	public String getPerson() {
+//		return person.toString();
+//	}
+
 	public Person getPerson() {
 		return person;
 	}
-
+	
 	public void setPerson(Person person) {
 		this.person = person;
 	}

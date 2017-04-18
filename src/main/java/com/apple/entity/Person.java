@@ -1,10 +1,9 @@
 package com.apple.entity;
 
+import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
-import org.springframework.data.solr.core.mapping.SolrDocument;
 
-@SolrDocument
 public class Person {
 
 	@Id
@@ -12,12 +11,15 @@ public class Person {
 	private String id;
 
 	@Indexed(name = "email", type = "string")
+	@Field("email")
 	private String email;
 	
 	@Indexed(name = "firstname", type = "string")
+	@Field("firstname")
 	private String firstName;
 
 	@Indexed(name = "lastname", type = "string")
+	@Field("lastname")
 	private String lastname;
 
 	public String getId() {
@@ -51,5 +53,12 @@ public class Person {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+	@Override
+	public String toString() {
+		return "{'id': "+ id + ", 'email':" + email + ", 'firstName':" + firstName + ", 'lastname':" + lastname + "}";
+	}
+	
+	
 	
 }

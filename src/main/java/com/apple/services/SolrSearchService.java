@@ -1,10 +1,11 @@
 package com.apple.services;
 
-import java.util.Map;
+import java.util.List;
 
 import com.apple.dtos.request.SearchRequestDTO;
+import com.apple.entity.UserSolrDocument;
 
 public interface SolrSearchService {
 
-	Map<String,Object> search(SearchRequestDTO searchRequest);
+	List<UserSolrDocument> search(SearchRequestDTO searchRequest);
 }

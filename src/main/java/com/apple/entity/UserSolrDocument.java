@@ -2,15 +2,23 @@ package com.apple.entity;
 
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.solr.core.mapping.Dynamic;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-public class UserProfile {
+@SolrDocument(solrCoreName = "userDetailsCore")
+public class UserSolrDocument {
 
 	@Id
 	@Indexed(name = "id", type = "string")
 	private String id;
+	
+	@Indexed(name = "profileid", type = "string")
+	@Field("profileid")
+	private String profileid;
+	
+	@Indexed(name = "personid", type = "string")
+	@Field("personid")
+	private String personid;
 
 	@Field("bio")
 	private String bio;
@@ -38,6 +46,26 @@ public class UserProfile {
 	@Indexed(name = "url", type = "string")
 	@Field("url")
 	private String url;
+	
+	@Indexed(name = "email", type = "string")
+	@Field("email")
+	private String email;
+	
+	@Indexed(name = "firstname", type = "string")
+	@Field("firstname")
+	private String firstName;
+
+	@Indexed(name = "lastname", type = "string")
+	@Field("lastname")
+	private String lastname;
+	
+	@Indexed(name = "name", type = "string")
+	@Field("name")
+	private String nickName;
+	
+	@Indexed(name = "avatarid", type = "string")
+	@Field("avatarid")
+	private String avatarId;
 
 	public String getId() {
 		return id;
@@ -45,6 +73,22 @@ public class UserProfile {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getProfileid() {
+		return profileid;
+	}
+
+	public void setProfileid(String profileid) {
+		this.profileid = profileid;
+	}
+
+	public String getPersonid() {
+		return personid;
+	}
+
+	public void setPersonid(String personid) {
+		this.personid = personid;
 	}
 
 	public String getBio() {
@@ -103,29 +147,45 @@ public class UserProfile {
 		this.url = url;
 	}
 
-	@Override
-	public String toString() {
-		return "{'id':" + id + ", 'bio':" + bio + ", 'company':" + company + ", 'expertise':" + expertise
-				+ ", 'location':" + location + ", 'occupation':" + occupation + ", 'title':" + title + ", 'url':" + url + "}";
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getAvatarId() {
+		return avatarId;
+	}
+
+	public void setAvatarId(String avatarId) {
+		this.avatarId = avatarId;
 	}
 	
 	
-	
 }
-
-/*
-"id": 0,
-
-"bio": "string",
-
-"company": "string",
-
-"expertise": "string",
-
-"location": "string",
-
-"occupation": "string",
-
-"title": "string",
-
-"url": "string"*/
