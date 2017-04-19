@@ -57,6 +57,10 @@
             <AppenderRef ref="SpringBoot-File-Appender"/>
             <AppenderRef ref="App-File-Appender"/>
         </Logger>
+        <Logger name="org.springframework.data.solr.core.SolrTemplate" level="debug">
+        	<AppenderRef ref="SpringBoot-File-Appender"/>
+            <AppenderRef ref="App-File-Appender"/>
+        </Logger>
         <Root>
             <AppenderRef ref="App-File-Appender"/>
         </Root>

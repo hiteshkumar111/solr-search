@@ -25,7 +25,7 @@ public class SolrSearchServiceImpl implements SolrSearchService{
 	
 	public List<UserSolrDocument> search(SearchRequestDTO searchRequest){
 	
-		List<UserSolrDocument> listOfUsers = searchRepo.findUserByEmail(searchRequest.getSearchText());
+		List<UserSolrDocument> listOfUsers = searchRepo.findByQueryAnnotation(searchRequest.getSearchText());
 		
 	//	Query query = buildSearchRequest(searchRequest);
 		
