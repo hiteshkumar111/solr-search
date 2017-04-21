@@ -13,7 +13,7 @@ public interface SearchRepositoryCustom extends SolrCrudRepository<UserSolrDocum
 
 	List<UserSolrDocument> findUserByEmail(String searchText);
 	
-	@Query("id:*?0* OR email:*?0* OR profileid:*?0* OR personid:*?0* OR expertise:*?0* OR location:*?0* OR name:*?0* OR bio:*?0* OR occupation:*?0* OR firstname:*?0* OR lastname:*?0* OR title:*?0*")
+	@Query("email:*?0* OR profileid:*?0* OR personid:*?0* OR expertise:*?0* OR location:*?0* OR name:*?0* OR bio:*?0* OR occupation:*?0* OR firstname:*?0* OR lastname:*?0* OR title:*?0*")
 	List<UserSolrDocument> findByQueryAnnotation(String searchTerm);
 	
    // Map<String,Object> search(Query query);

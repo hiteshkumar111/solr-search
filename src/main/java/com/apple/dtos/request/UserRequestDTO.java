@@ -2,7 +2,6 @@ package com.apple.dtos.request;
 
 import java.io.Serializable;
 
-import com.apple.dtos.PersonDTO;
 import com.apple.dtos.UserProfileDTO;
 
 public class UserRequestDTO implements Serializable {
@@ -14,10 +13,9 @@ public class UserRequestDTO implements Serializable {
 	
 
 	private String id;
-	private String nickName;
+	private String nickname;
 	private String avatarId;
 	private UserProfileDTO profile; 
-	private PersonDTO person;
 
 	public String getId() {
 		return id;
@@ -27,12 +25,12 @@ public class UserRequestDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getAvatarId() {
@@ -50,15 +48,6 @@ public class UserRequestDTO implements Serializable {
 	public void setProfile(UserProfileDTO profile) {
 		this.profile = profile;
 	}
-
-	public PersonDTO getPerson() {
-		return person;
-	}
-
-	public void setPerson(PersonDTO person) {
-		this.person = person;
-	}
-
 	
 }
 

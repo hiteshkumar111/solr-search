@@ -1,14 +1,7 @@
 package com.apple.controllers;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apple.dtos.request.UserRequestDTO;
 import com.apple.dtos.response.UserResponseDTO;
-import com.apple.entity.User;
 import com.apple.entity.UserSolrDocument;
 import com.apple.mapper.UserMapper;
 import com.apple.services.UserService;
 import com.apple.services.ValidatorService;
-import com.apple.utils.HttpClientUtil;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -42,35 +33,16 @@ public class UserAttributeController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Resource
-	private Environment env;
-	
-	static final String RAZOR_API_BASE_URL = "razor.baseurl";
-	
 
 	@ApiOperation(value = "save", notes = "", response = Object.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
 	@RequestMapping(consumes = { "*/*" }, method = RequestMethod.POST)
-	public ResponseEntity<UserResponseDTO> saveUser(@RequestBody UserRequestDTO userRequestDTO) throws IOException {
+	public ResponseEntity<UserResponseDTO> saveUser(@RequestBody UserRequestDTO userRequestDTO) {
 		validatorService.validateUserSaveRequest(userRequestDTO);
-
-		//call Api to hit razor service;
-		
-		String url = env.getRequiredProperty(RAZOR_API_BASE_URL) + env.getRequiredProperty("razor.user");
-		Map<String, String> headers = new HashMap<String, String>();
-		
-		//userRequestDTO = HttpClientUtil.post(url, userRequestDTO, UserRequestDTO.class, headers); 
-		
-		User user = null;
-
-		user = mapper.map(userRequestDTO, User.class);
-
-		UserSolrDocument userSolrDoc = userService.save(mapper.map(user));
-		
-		user = mapper.map(userSolrDoc);
-
-		return new ResponseEntity<UserResponseDTO>(mapper.map(user, UserResponseDTO.class), HttpStatus.OK);
+		userRequestDTO = userService.createUser(userRequestDTO);
+		UserSolrDocument solrDoc = mapper.map(userRequestDTO, UserSolrDocument.class);
+		userService.save(solrDoc);
+		return new ResponseEntity<UserResponseDTO>(mapper.map(userRequestDTO, UserResponseDTO.class), HttpStatus.OK);
 	}
 
 }

@@ -24,7 +24,19 @@ public class ValidatorServiceImpl implements ValidatorService {
 	public void validateUserSaveRequest(UserRequestDTO userRequestDTO) {
 		
 		if(null==userRequestDTO){
-			throw new InvalidRequestException(ErrorCode.INVALID_REQUEST,"Request Object cannot be null");
+			throw new InvalidRequestException(ErrorCode.INVALID_REQUEST,"Request failed : Empty request recieved");
+		}
+		
+		if(null == userRequestDTO.getProfile()){
+			throw new InvalidRequestException(ErrorCode.INVALID_REQUEST,"Required filed missing : Profile");
+		}
+		
+		if(null == userRequestDTO.getId() || null == userRequestDTO.getProfile().getId()){
+			throw new InvalidRequestException(ErrorCode.INVALID_REQUEST,"Required filed missing : Id");
+		}
+		
+		if(!userRequestDTO.getProfile().getId().equals(userRequestDTO.getId())){
+			throw new InvalidRequestException(ErrorCode.INVALID_REQUEST,"Request failed : Id and profile Id must be same");
 		}
 		
 	}

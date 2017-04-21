@@ -2,9 +2,10 @@ package com.apple.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.apple.dtos.UserDTO;
+import com.apple.dtos.UserProfileDTO;
 import com.apple.dtos.request.UserRequestDTO;
 import com.apple.dtos.response.UserResponseDTO;
-import com.apple.entity.Person;
 import com.apple.entity.User;
 import com.apple.entity.UserProfile;
 import com.apple.entity.UserSolrDocument;
@@ -24,14 +25,7 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 					@Override
 					public void mapAtoB(UserSolrDocument userSolrDoc, User user, MappingContext context) {
 						// TODO Auto-generated method stub
-						Person person = new Person();
 						UserProfile profile = new UserProfile();
-						person.setId(userSolrDoc.getPersonid());
-						person.setEmail(userSolrDoc.getEmail());
-						person.setFirstName(userSolrDoc.getFirstName());
-						person.setLastname(userSolrDoc.getLastname());
-						user.setPerson(person);
-						profile.setId(userSolrDoc.getProfileid());
 						profile.setBio(userSolrDoc.getBio());
 						profile.setCompany(userSolrDoc.getCompany());
 						profile.setExpertise(userSolrDoc.getExpertise());
@@ -42,28 +36,22 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 						user.setProfile(profile);
 						user.setAvatarId(userSolrDoc.getAvatarId());
 						user.setId(userSolrDoc.getId());
-						user.setNickName(userSolrDoc.getNickName());
+						user.setNickname(userSolrDoc.getNickname());
 
 					}
 					
 					@Override
 					public void mapBtoA(User user, UserSolrDocument userSolrDoc, MappingContext context) {
 						
-						Person person = user.getPerson();
 						UserProfile profile = user.getProfile();
 						userSolrDoc.setAvatarId(user.getAvatarId());
 						userSolrDoc.setBio(profile.getBio());
 						userSolrDoc.setCompany(profile.getCompany());
-						userSolrDoc.setEmail(person.getEmail());
 						userSolrDoc.setExpertise(profile.getExpertise());
-						userSolrDoc.setFirstName(person.getFirstName());
 						userSolrDoc.setId(user.getId());
-						userSolrDoc.setLastname(person.getLastname());
 						userSolrDoc.setLocation(profile.getLocation());
-						userSolrDoc.setNickName(user.getNickName());
+						userSolrDoc.setNickname(user.getNickname());
 						userSolrDoc.setOccupation(profile.getOccupation());
-						userSolrDoc.setPersonid(person.getId());
-						userSolrDoc.setProfileid(profile.getId());
 						userSolrDoc.setTitle(profile.getTitle());
 						userSolrDoc.setUrl(profile.getUrl());
 						
@@ -75,21 +63,15 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 			@Override
 			public void mapAtoB(User user, UserSolrDocument userSolrDoc, MappingContext context) {
 				
-				Person person = user.getPerson();
 				UserProfile profile = user.getProfile();
 				userSolrDoc.setAvatarId(user.getAvatarId());
 				userSolrDoc.setBio(profile.getBio());
 				userSolrDoc.setCompany(profile.getCompany());
-				userSolrDoc.setEmail(person.getEmail());
 				userSolrDoc.setExpertise(profile.getExpertise());
-				userSolrDoc.setFirstName(person.getFirstName());
 				userSolrDoc.setId(user.getId());
-				userSolrDoc.setLastname(person.getLastname());
 				userSolrDoc.setLocation(profile.getLocation());
-				userSolrDoc.setNickName(user.getNickName());
+				userSolrDoc.setNickname(user.getNickname());
 				userSolrDoc.setOccupation(profile.getOccupation());
-				userSolrDoc.setPersonid(person.getId());
-				userSolrDoc.setProfileid(profile.getId());
 				userSolrDoc.setTitle(profile.getTitle());
 				userSolrDoc.setUrl(profile.getUrl());
 				
@@ -98,14 +80,7 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 			@Override
 			public void mapBtoA(UserSolrDocument userSolrDoc, User user, MappingContext context) {
 				// TODO Auto-generated method stub
-				Person person = new Person();
 				UserProfile profile = new UserProfile();
-				person.setId(userSolrDoc.getPersonid());
-				person.setEmail(userSolrDoc.getEmail());
-				person.setFirstName(userSolrDoc.getFirstName());
-				person.setLastname(userSolrDoc.getLastname());
-				user.setPerson(person);
-				profile.setId(userSolrDoc.getProfileid());
 				profile.setBio(userSolrDoc.getBio());
 				profile.setCompany(userSolrDoc.getCompany());
 				profile.setExpertise(userSolrDoc.getExpertise());
@@ -116,7 +91,7 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 				user.setProfile(profile);
 				user.setAvatarId(userSolrDoc.getAvatarId());
 				user.setId(userSolrDoc.getId());
-				user.setNickName(userSolrDoc.getNickName());
+				user.setNickname(userSolrDoc.getNickname());
 
 			}
 		});
@@ -127,22 +102,16 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 	}
 	
 	public UserSolrDocument map(User user){
-		Person person = user.getPerson();
 		UserProfile profile = user.getProfile();
 		UserSolrDocument userSolrDoc = new UserSolrDocument();
 		userSolrDoc.setAvatarId(user.getAvatarId());
 		userSolrDoc.setBio(profile.getBio());
 		userSolrDoc.setCompany(profile.getCompany());
-		userSolrDoc.setEmail(person.getEmail());
 		userSolrDoc.setExpertise(profile.getExpertise());
-		userSolrDoc.setFirstName(person.getFirstName());
 		userSolrDoc.setId(user.getId());
-		userSolrDoc.setLastname(person.getLastname());
 		userSolrDoc.setLocation(profile.getLocation());
-		userSolrDoc.setNickName(user.getNickName());
+		userSolrDoc.setNickname(user.getNickname());
 		userSolrDoc.setOccupation(profile.getOccupation());
-		userSolrDoc.setPersonid(person.getId());
-		userSolrDoc.setProfileid(profile.getId());
 		userSolrDoc.setTitle(profile.getTitle());
 		userSolrDoc.setUrl(profile.getUrl());
 		return userSolrDoc;
@@ -150,14 +119,7 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 	
 	public User map(UserSolrDocument userSolrDoc){
 		User user = new User();
-		Person person = new Person();
 		UserProfile profile = new UserProfile();
-		person.setId(userSolrDoc.getPersonid());
-		person.setEmail(userSolrDoc.getEmail());
-		person.setFirstName(userSolrDoc.getFirstName());
-		person.setLastname(userSolrDoc.getLastname());
-		user.setPerson(person);
-		profile.setId(userSolrDoc.getProfileid());
 		profile.setBio(userSolrDoc.getBio());
 		profile.setCompany(userSolrDoc.getCompany());
 		profile.setExpertise(userSolrDoc.getExpertise());
@@ -168,8 +130,38 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 		user.setProfile(profile);
 		user.setAvatarId(userSolrDoc.getAvatarId());
 		user.setId(userSolrDoc.getId());
-		user.setNickName(userSolrDoc.getNickName());
+		user.setNickname(userSolrDoc.getNickname());
 		return user;
 	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T map(UserRequestDTO userRequestDTO, Class<T> obj) {
+		
+		if(obj.isInstance(UserDTO.class)){
+			UserDTO user = new UserDTO();
+			user.setAvatarId(userRequestDTO.getAvatarId());
+			user.setId(userRequestDTO.getId());
+			user.setNickName(userRequestDTO.getNickname());
+			return (T) user;
+		}else if(obj.isInstance(UserProfileDTO.class)){
+			return (T) userRequestDTO.getProfile();
+		}else if(obj.isInstance(UserSolrDocument.class)){
+			UserProfileDTO profile = userRequestDTO.getProfile();
+			UserSolrDocument userSolrDoc = new UserSolrDocument();
+			userSolrDoc.setAvatarId(userRequestDTO.getAvatarId());
+			userSolrDoc.setBio(profile.getBio());
+			userSolrDoc.setCompany(profile.getCompany());
+			userSolrDoc.setExpertise(profile.getExpertise());
+			userSolrDoc.setId(userRequestDTO.getId());
+			userSolrDoc.setLocation(profile.getLocation());
+			userSolrDoc.setNickname(userRequestDTO.getNickname());
+			userSolrDoc.setOccupation(profile.getOccupation());
+			userSolrDoc.setTitle(profile.getTitle());
+			userSolrDoc.setUrl(profile.getUrl());
+		}
+		
+		return null;
+	}
+	
 }
 

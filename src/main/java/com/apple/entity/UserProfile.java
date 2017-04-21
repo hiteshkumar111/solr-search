@@ -8,10 +8,6 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 
 public class UserProfile {
 
-	@Id
-	@Indexed(name = "id", type = "string")
-	private String id;
-
 	@Field("bio")
 	private String bio;
 	
@@ -38,14 +34,6 @@ public class UserProfile {
 	@Indexed(name = "url", type = "string")
 	@Field("url")
 	private String url;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getBio() {
 		return bio;
@@ -105,7 +93,7 @@ public class UserProfile {
 
 	@Override
 	public String toString() {
-		return "{'id':" + id + ", 'bio':" + bio + ", 'company':" + company + ", 'expertise':" + expertise
+		return "{'bio':" + bio + ", 'company':" + company + ", 'expertise':" + expertise
 				+ ", 'location':" + location + ", 'occupation':" + occupation + ", 'title':" + title + ", 'url':" + url + "}";
 	}
 	

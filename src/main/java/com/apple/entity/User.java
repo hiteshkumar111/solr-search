@@ -14,7 +14,7 @@ public class User {
 
 	@Indexed(name = "name", type = "string")
 	@Field("name")
-	private String nickName;
+	private String nickname;
 	
 	@Indexed(name = "avatarid", type = "string")
 	@Field("avatarid")
@@ -23,8 +23,6 @@ public class User {
 	@Field(child=true)
 	private UserProfile profile; 
 	
-	@Field(child=true)
-	private Person person;
 
 	public String getId() {
 		return id;
@@ -34,12 +32,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getAvatarId() {
@@ -50,10 +48,6 @@ public class User {
 		this.avatarId = avatarId;
 	}
 
-//	public String getProfile() {
-//		return profile.toString();
-//	}
-	
 	public UserProfile getProfile() {
 		return profile;
 	}
@@ -62,18 +56,6 @@ public class User {
 		this.profile = profile;
 	}
 
-//	public String getPerson() {
-//		return person.toString();
-//	}
-
-	public Person getPerson() {
-		return person;
-	}
-	
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-	
 }
 
 
