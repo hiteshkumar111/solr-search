@@ -134,34 +134,82 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 		return user;
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T> T map(UserRequestDTO userRequestDTO, Class<T> obj) {
-		
-		if(obj.isInstance(UserDTO.class)){
-			UserDTO user = new UserDTO();
-			user.setAvatarId(userRequestDTO.getAvatarId());
-			user.setId(userRequestDTO.getId());
-			user.setNickName(userRequestDTO.getNickname());
-			return (T) user;
-		}else if(obj.isInstance(UserProfileDTO.class)){
-			return (T) userRequestDTO.getProfile();
-		}else if(obj.isInstance(UserSolrDocument.class)){
-			UserProfileDTO profile = userRequestDTO.getProfile();
-			UserSolrDocument userSolrDoc = new UserSolrDocument();
-			userSolrDoc.setAvatarId(userRequestDTO.getAvatarId());
-			userSolrDoc.setBio(profile.getBio());
-			userSolrDoc.setCompany(profile.getCompany());
-			userSolrDoc.setExpertise(profile.getExpertise());
-			userSolrDoc.setId(userRequestDTO.getId());
-			userSolrDoc.setLocation(profile.getLocation());
-			userSolrDoc.setNickname(userRequestDTO.getNickname());
-			userSolrDoc.setOccupation(profile.getOccupation());
-			userSolrDoc.setTitle(profile.getTitle());
-			userSolrDoc.setUrl(profile.getUrl());
-		}
-		
-		return null;
+	public UserDTO convertToUserDTO(UserRequestDTO userRequestDTO){
+		UserDTO user = new UserDTO();
+		user.setAvatarId(userRequestDTO.getAvatarId());
+		user.setId(userRequestDTO.getId());
+		user.setNickname(userRequestDTO.getNickname());
+		return  user;
 	}
+
+	public UserProfileDTO convertToUserProfileDTO(UserRequestDTO userRequestDTO){
+		return userRequestDTO.getProfile();
+	}
+
+	public UserSolrDocument convertToUserSolrDoc(UserRequestDTO userRequestDTO){
+		UserProfileDTO profile = userRequestDTO.getProfile();
+		UserSolrDocument userSolrDoc = new UserSolrDocument();
+		userSolrDoc.setAvatarId(userRequestDTO.getAvatarId());
+		userSolrDoc.setBio(profile.getBio());
+		userSolrDoc.setCompany(profile.getCompany());
+		userSolrDoc.setExpertise(profile.getExpertise());
+		userSolrDoc.setId(userRequestDTO.getId());
+		userSolrDoc.setLocation(profile.getLocation());
+		userSolrDoc.setNickname(userRequestDTO.getNickname());
+		userSolrDoc.setOccupation(profile.getOccupation());
+		userSolrDoc.setTitle(profile.getTitle());
+		userSolrDoc.setUrl(profile.getUrl());
+		return userSolrDoc;
+	}
+
+	public UserSolrDocument convertToUserSolrDoc(UserDTO userDto) {
+		UserSolrDocument userSolrDoc = new UserSolrDocument();
+		userSolrDoc.setAvatarId(userDto.getAvatarId());
+		userSolrDoc.setId(userDto.getId());
+		userSolrDoc.setNickname(userDto.getNickname());
+		return userSolrDoc;
+	}
+
+	public UserSolrDocument convertToUserSolrDoc(UserProfileDTO profile, UserSolrDocument userSolrDoc) {
+		userSolrDoc.setBio(profile.getBio());
+		userSolrDoc.setCompany(profile.getCompany());
+		userSolrDoc.setExpertise(profile.getExpertise());
+		userSolrDoc.setLocation(profile.getLocation());
+		userSolrDoc.setOccupation(profile.getOccupation());
+		userSolrDoc.setTitle(profile.getTitle());
+		userSolrDoc.setUrl(profile.getUrl());
+		return userSolrDoc;
+	}
+
+
+//	public <T> T map(UserRequestDTO userRequestDTO, Class<T> obj) {
+//
+//		if(obj.isInstance(UserDTO.class)){
+//			UserDTO user = new UserDTO();
+//			user.setAvatarId(userRequestDTO.getAvatarId());
+//			user.setId(userRequestDTO.getId());
+//			user.setNickname(userRequestDTO.getNickname());
+//			return (T) user;
+//		}else if(obj.isInstance(UserProfileDTO.class)){
+//			return (T) userRequestDTO.getProfile();
+//		}else if(obj.isInstance(UserSolrDocument.class)){
+//			UserProfileDTO profile = userRequestDTO.getProfile();
+//			UserSolrDocument userSolrDoc = new UserSolrDocument();
+//			userSolrDoc.setAvatarId(userRequestDTO.getAvatarId());
+//			userSolrDoc.setBio(profile.getBio());
+//			userSolrDoc.setCompany(profile.getCompany());
+//			userSolrDoc.setExpertise(profile.getExpertise());
+//			userSolrDoc.setId(userRequestDTO.getId());
+//			userSolrDoc.setLocation(profile.getLocation());
+//			userSolrDoc.setNickname(userRequestDTO.getNickname());
+//			userSolrDoc.setOccupation(profile.getOccupation());
+//			userSolrDoc.setTitle(profile.getTitle());
+//			userSolrDoc.setUrl(profile.getUrl());
+//			return (T) userSolrDoc;
+//		}
+//
+//		return null;
+//	}
 	
 }
 

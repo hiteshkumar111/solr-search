@@ -1,10 +1,7 @@
 package com.apple.entity;
 
 import org.apache.solr.client.solrj.beans.Field;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.solr.core.mapping.Dynamic;
 import org.springframework.data.solr.core.mapping.Indexed;
-import org.springframework.data.solr.core.mapping.SolrDocument;
 
 public class UserProfile {
 
@@ -97,23 +94,4 @@ public class UserProfile {
 				+ ", 'location':" + location + ", 'occupation':" + occupation + ", 'title':" + title + ", 'url':" + url + "}";
 	}
 	
-	
-	
 }
-
-/*
-"id": 0,
-
-"bio": "string",
-
-"company": "string",
-
-"expertise": "string",
-
-"location": "string",
-
-"occupation": "string",
-
-"title": "string",
-
-"url": "string"*/

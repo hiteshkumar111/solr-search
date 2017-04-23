@@ -16,7 +16,7 @@ import com.apple.entity.UserSolrDocument;
 import com.apple.exceptions.ErrorCode;
 import com.apple.exceptions.RazorServiceAPIException;
 import com.apple.mapper.UserMapper;
-import com.apple.repos.UserRepository;
+import com.apple.repos.UserSolrDocRepository;
 import com.apple.services.UserService;
 import com.apple.utils.HttpClientUtil;
 
@@ -24,7 +24,7 @@ import com.apple.utils.HttpClientUtil;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserSolrDocRepository userSolrDocRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -36,19 +36,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserSolrDocument save(UserSolrDocument user) {
-		userRepository.save(user);
+		userSolrDocRepository.save(user);
 		return user;
 	}
 
 	@Override
 	public UserRequestDTO createUser(UserRequestDTO userRequestDTO) {
 		try{
-			String url 					= env.getRequiredProperty(RAZOR_API_BASE_URL) + env.getRequiredProperty("razor.user");
+			String userServieURL        = env.getRequiredProperty(RAZOR_API_BASE_URL) + env.getRequiredProperty("razor.user");
+			String userProfileServieURL = env.getRequiredProperty(RAZOR_API_BASE_URL) + env.getRequiredProperty("razor.user-profile");
 			Map<String, String> headers = new HashMap<String, String>();
-			UserDTO userDTO 			= mapper.map(userRequestDTO, UserDTO.class);
-			UserProfileDTO userProfile 	= mapper.map(userRequestDTO, UserProfileDTO.class);
-			userDTO 					= HttpClientUtil.post(url, userDTO, UserDTO.class, headers);
-			userProfile 				= HttpClientUtil.post(url, userProfile, UserProfileDTO.class, headers);
+		//	headers.put("Content-Type","application/json");
+			UserDTO userDTO 			= mapper.convertToUserDTO(userRequestDTO);
+			UserProfileDTO userProfile 	= mapper.convertToUserProfileDTO(userRequestDTO);
+
+			userDTO 					= HttpClientUtil.post(userServieURL, userDTO, UserDTO.class, headers);
+
+			userProfile 				= HttpClientUtil.post(userProfileServieURL, userProfile, UserProfileDTO.class, headers);
 			return userRequestDTO;
 		}catch(Exception e){
 			e.printStackTrace();

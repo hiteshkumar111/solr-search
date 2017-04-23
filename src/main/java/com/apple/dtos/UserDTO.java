@@ -3,7 +3,7 @@ package com.apple.dtos;
 public class UserDTO {
 
 	private String id;
-	private String nickName;
+	private String nickname;
 	private String avatarId;
 	
 
@@ -15,12 +15,12 @@ public class UserDTO {
 		this.id = id;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getAvatarId() {

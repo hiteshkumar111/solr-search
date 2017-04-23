@@ -12,7 +12,7 @@ import com.apple.entity.UserSolrDocument;
 public interface SearchRepositoryCustom extends SolrCrudRepository<UserSolrDocument, String> {
 
 	//List<UserSolrDocument> findUserByEmail(String searchText);
-	
+
 	@Query("company:*?0* OR url:*?0* OR avatarid:*?0* OR expertise:*?0* OR location:*?0* OR name:*?0* OR bio:*?0* OR occupation:*?0* OR title:*?0*")
 	List<UserSolrDocument> findByQueryAnnotation(String searchTerm);
 	

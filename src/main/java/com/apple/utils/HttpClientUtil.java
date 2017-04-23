@@ -129,7 +129,9 @@ public class HttpClientUtil {
     }
 
     private static void verifyResponse(HttpResponse httpResponse) throws HttpResponseException{
+        System.out.println(httpResponse.getEntity());
         int statusCode = httpResponse.getStatusLine().getStatusCode();
+        System.out.println("status Code - "+statusCode);
         if(statusCode<200 || statusCode>=299){
             throw new HttpResponseException(statusCode,"Failed Http Request");
         }

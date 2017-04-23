@@ -8,5 +8,5 @@ public interface UserService {
 	UserSolrDocument save(UserSolrDocument User);
 
 	UserRequestDTO createUser(UserRequestDTO userRequestDTO);
-	
+
 }

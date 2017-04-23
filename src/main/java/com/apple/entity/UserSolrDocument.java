@@ -12,6 +12,7 @@ public class UserSolrDocument {
 	@Indexed(name = "id", type = "string")
 	private String id;
 
+	@Indexed(name = "bio", type = "string")
 	@Field("bio")
 	private String bio;
 
