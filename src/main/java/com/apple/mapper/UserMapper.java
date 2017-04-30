@@ -1,5 +1,6 @@
 package com.apple.mapper;
 
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import com.apple.dtos.UserDTO;
@@ -178,6 +179,21 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 		userSolrDoc.setOccupation(profile.getOccupation());
 		userSolrDoc.setTitle(profile.getTitle());
 		userSolrDoc.setUrl(profile.getUrl());
+		return userSolrDoc;
+	}
+
+	public UserSolrDocument map(Document doc) {
+		UserSolrDocument userSolrDoc = new UserSolrDocument();
+		userSolrDoc.setId(doc.getString("id"));
+		userSolrDoc.setNickname(doc.getString("nickname"));
+		userSolrDoc.setAvatarId(doc.getString("avtarId"));
+		userSolrDoc.setBio(doc.getString("bio"));
+		userSolrDoc.setCompany(doc.getString("company"));
+		userSolrDoc.setExpertise(doc.getString("expertise"));
+		userSolrDoc.setLocation(doc.getString("expertise"));
+		userSolrDoc.setOccupation(doc.getString("occupation"));
+		userSolrDoc.setTitle(doc.getString("title"));
+		userSolrDoc.setUrl(doc.getString("url"));
 		return userSolrDoc;
 	}
 

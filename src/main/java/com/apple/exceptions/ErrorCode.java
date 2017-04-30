@@ -8,7 +8,8 @@ public enum ErrorCode {
   SAVE_OR_UPDATE_FAILED(902,"Error while saving or updating to database."),
   NO_RECORD_FOUND(903,"No Records Found"),
   NO_RESOURCE_FOUND(903,"No Resource found."),
-  PARTIAL_DATA(904,"Incomplete requestDTO.");
+  PARTIAL_DATA(904,"Incomplete requestDTO."),
+  READ_FAILED(905,"Errow while reading data from database.");
 
 
   private Integer subErrorCode;

@@ -57,6 +57,34 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("Message" + ex.getMessage(),ex);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(value = {SolrSearchException.class})
+    protected ResponseEntity<ApiErrorResponse> handleSolrException(ClientException ex, WebRequest request) {
+        ApiErrorResponse apiErrorResponse = createError(ex);
+        log.error("Message" + ex.getMessage(),ex);
+        return new ResponseEntity<>(apiErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(value = {RazorServiceAPIException.class})
+    protected ResponseEntity<ApiErrorResponse> handleRazorException(ClientException ex, WebRequest request) {
+        ApiErrorResponse apiErrorResponse = createError(ex);
+        log.error("Message" + ex.getMessage(),ex);
+        return new ResponseEntity<>(apiErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(value = {MongoDBExporterException.class})
+    protected ResponseEntity<ApiErrorResponse> handleMongoDBExportException(ClientException ex, WebRequest request) {
+        ApiErrorResponse apiErrorResponse = createError(ex);
+        log.error("Message" + ex.getMessage(),ex);
+        return new ResponseEntity<>(apiErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(value = {MongoDBReaderException.class})
+    protected ResponseEntity<ApiErrorResponse> handleMongoDBReadException(ClientException ex, WebRequest request) {
+        ApiErrorResponse apiErrorResponse = createError(ex);
+        log.error("Message" + ex.getMessage(),ex);
+        return new ResponseEntity<>(apiErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
     private ApiErrorResponse createError(ClientException e) {
