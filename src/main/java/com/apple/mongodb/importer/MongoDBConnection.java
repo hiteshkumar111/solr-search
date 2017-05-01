@@ -16,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.apple.dtos.UserProfileDTO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -122,7 +123,7 @@ public class MongoDBConnection {
 		this.password = password;
 	}
 	
-	public static void main(String args[]){
+	public static void hh(String args[]){
 		MongoClient cl = new MongoClient();
 		MongoDatabase db = cl.getDatabase("userDetailsDB");
 		String str = "{\"id\":3, \"bio\":\"Mongo Java Developer\",\"company\":\"Mongodb data export\","
@@ -137,13 +138,34 @@ public class MongoDBConnection {
 			String name = "mongoName";
 			String bio = "Mongo Java Developer";
 			List<Document> docList = new ArrayList<Document>();
-			for(int i=1001;i<10000;i++){
-				HashMap<String,Object> result =
-				        new ObjectMapper().readValue(str, HashMap.class);
+			for(int i=1001;i<11000;i++){
+				HashMap<String,Object> result = new HashMap<String, Object>(); //new ObjectMapper().readValue(str, HashMap.class)
 				result.put("id", i+"");
 				result.put("nickname", nickName+"_"+i);
+				result.put("avtarId", "MongoAvtar");
 				result.put("name", name+"_"+i);
-				result.put("bio", bio + "_"+i);
+				if(i%2==0){
+					result.put("bio", bio + "_"+i);
+					result.put("company", "Mongodb data export");
+					result.put("expertise", "mongodb Java");
+					result.put("location", "CA");
+					result.put("occupation", "occupation");
+					result.put("title", "boss");
+					result.put("url", "hellomongodb.com");
+				}else{
+					UserProfileDTO profile = new UserProfileDTO();
+					profile.setBio(bio + "_"+i);
+					profile.setCompany("Mongodb data export");
+					profile.setExpertise("mongodb java");
+					profile.setLocation("CA");
+					profile.setOccupation("occupation");
+					profile.setTitle("Boss");
+					profile.setUrl("hellomongodb.com");
+					
+					result.put("profile", new ObjectMapper().convertValue(profile, Map.class));
+				}
+				
+				
 				
 				Document d = new Document(result);
 				docList.add(d);
@@ -151,13 +173,7 @@ public class MongoDBConnection {
 			
 			doc.insertMany(docList);
 			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

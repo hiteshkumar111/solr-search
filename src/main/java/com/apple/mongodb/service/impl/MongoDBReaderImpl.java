@@ -55,7 +55,7 @@ public class MongoDBReaderImpl implements MongoDBReader {
 			while(till>0){
 				
 				MongoCollection<Document> mCollection 	= db.getCollection(mCon.getMongoCollectionName());
-				FindIterable<Document>  documentsList = this.readFromMongoDB(mCollection, skip, batchSize);
+				FindIterable<Document>  documentsList = this.readFromMongoDB(mCollection, skip, batchSize>totalRecords?batchSize:totalRecords);
 				MongoCursor<Document> result = documentsList.iterator();
 				Set<UserSolrDocument> userSolrItr = new HashSet<UserSolrDocument>();
 				while(result.hasNext()){

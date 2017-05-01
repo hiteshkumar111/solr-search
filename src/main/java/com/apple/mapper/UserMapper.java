@@ -1,6 +1,7 @@
 package com.apple.mapper;
 
 import org.bson.Document;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.apple.dtos.UserDTO;
@@ -10,6 +11,7 @@ import com.apple.dtos.response.UserResponseDTO;
 import com.apple.entity.User;
 import com.apple.entity.UserProfile;
 import com.apple.entity.UserSolrDocument;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
@@ -184,16 +186,23 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 
 	public UserSolrDocument map(Document doc) {
 		UserSolrDocument userSolrDoc = new UserSolrDocument();
+		UserProfileDTO profile =  new ObjectMapper().convertValue(doc.get("profile"), UserProfileDTO.class);
+		
+		if(null!=profile){
+			userSolrDoc= convertToUserSolrDoc(profile, userSolrDoc);
+		}else{
+			userSolrDoc.setBio(doc.getString("bio"));
+			userSolrDoc.setCompany(doc.getString("company"));
+			userSolrDoc.setExpertise(doc.getString("expertise"));
+			userSolrDoc.setLocation(doc.getString("expertise"));
+			userSolrDoc.setOccupation(doc.getString("occupation"));
+			userSolrDoc.setTitle(doc.getString("title"));
+			userSolrDoc.setUrl(doc.getString("url"));
+		}
+		
 		userSolrDoc.setId(doc.getString("id"));
 		userSolrDoc.setNickname(doc.getString("nickname"));
 		userSolrDoc.setAvatarId(doc.getString("avtarId"));
-		userSolrDoc.setBio(doc.getString("bio"));
-		userSolrDoc.setCompany(doc.getString("company"));
-		userSolrDoc.setExpertise(doc.getString("expertise"));
-		userSolrDoc.setLocation(doc.getString("expertise"));
-		userSolrDoc.setOccupation(doc.getString("occupation"));
-		userSolrDoc.setTitle(doc.getString("title"));
-		userSolrDoc.setUrl(doc.getString("url"));
 		return userSolrDoc;
 	}
 
