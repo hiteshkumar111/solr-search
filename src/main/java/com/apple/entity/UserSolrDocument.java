@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
+import java.util.Date;
+
 @SolrDocument(solrCoreName = "userDetailsCore")
 public class UserSolrDocument {
 
@@ -47,6 +49,11 @@ public class UserSolrDocument {
 	@Indexed(name = "avatarid", type = "string")
 	@Field("avatarid")
 	private String avatarId;
+
+	@Indexed(name = "membersince", type = "date")
+	@Field("membersince")
+	private Date memberSince;
+
 
 	public String getId() {
 		return id;
@@ -126,6 +133,14 @@ public class UserSolrDocument {
 
 	public void setAvatarId(String avatarId) {
 		this.avatarId = avatarId;
+	}
+
+	public Date getMemberSince() {
+		return memberSince;
+	}
+
+	public void setMemberSince(Date memberSince) {
+		this.memberSince = memberSince;
 	}
 
 }

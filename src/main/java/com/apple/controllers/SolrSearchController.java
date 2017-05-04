@@ -32,7 +32,7 @@ public class SolrSearchController {
     @ApiOperation(value = "search", notes = "", response = Object.class)
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
     @RequestMapping(value = "/search",  consumes = { "*/*" }, method = RequestMethod.POST)
-    public ResponseEntity<List<UserSolrDocument>> searchTickets(@RequestBody SearchRequestDTO searchRequestDTO) {
+    public ResponseEntity<List<UserSolrDocument>> searchTickets(@RequestBody SearchRequestDTO searchRequestDTO) throws Exception {
         validatorService.validateSearchRequest(searchRequestDTO);
         return new ResponseEntity<>(solrSearchService.search(searchRequestDTO),HttpStatus.OK);
     }

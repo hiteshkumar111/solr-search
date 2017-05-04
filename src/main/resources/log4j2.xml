@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration monitorInterval="60">
     <Properties>
-        <Property name="log-path">/opt/searchapi/</Property>
+        <Property name="log-path">searchapi/</Property>
     </Properties>
     <!--Appenders-->
     <Appenders>
@@ -36,14 +36,6 @@
             </Policies>
             <DefaultRolloverStrategy max="4"/>
         </RollingFile>
-
-
-        <Raven name="Sentry">
-            <dsn>
-                http://207bde40458f4772a30892f55e3d3b5c:1a40611afff04d53aeee5c21a53f308c@sentry.helpchat.in:9000/43
-            </dsn>
-        </Raven>
-
     </Appenders>
 
 
@@ -51,7 +43,6 @@
     <Loggers>
         <Logger name="com.apple" level="debug" additivity="false">
             <AppenderRef ref="App-File-Appender"/>
-            <AppenderRef ref="Sentry" level="error"/>
         </Logger>
         <Logger name="org.springframework.web" level="debug" additivity="false">
             <AppenderRef ref="SpringBoot-File-Appender"/>

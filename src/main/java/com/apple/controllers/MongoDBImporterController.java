@@ -26,7 +26,7 @@ public class MongoDBImporterController {
     @ApiOperation(value = "export", notes = "Read from MongoDB and index into Solr", response = Object.class)
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
     @RequestMapping(value = "/export",  consumes = { "*/*" }, method = RequestMethod.GET)
-    public ResponseEntity<List<UserSolrDocument>> exportToSolr(@RequestParam(value="size", required=true) Integer totalRecords) {
+    public ResponseEntity<List<UserSolrDocument>> exportToSolr(@RequestParam(value="size", required=true) Integer totalRecords) throws Exception {
 
     	mongoDBReader.exec(totalRecords);
     	

@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apple.entity.UserSolrDocument;
-import com.apple.exceptions.ErrorCode;
-import com.apple.exceptions.MongoDBExporterException;
-import com.apple.exceptions.MongoDBReaderException;
 import com.apple.mapper.UserMapper;
 import com.apple.mongodb.importer.MongoDBConnection;
 import com.apple.mongodb.services.MongoDBReader;
@@ -33,18 +30,18 @@ public class MongoDBReaderImpl implements MongoDBReader {
 	@Autowired
 	UserMapper mapper;
 	
-	private final int batchSize 	= 500;
+	private final int batchSize = 500;
 
 	public FindIterable<Document> readFromMongoDB(MongoCollection<Document> collection, Integer skip, Integer pageSize) {
-		return collection.find().skip(skip).batchSize(pageSize);
+		return collection.find().skip(skip).limit(pageSize);
 	}
 
 	@Override
-	public void exec(Integer totalRecords) {
+	public void exec(Integer totalRecords) throws Exception {
 		
 		try{
-			MongoClient client 						= mCon.getConnection();
-			MongoDatabase db 						= client.getDatabase(mCon.getMongoDBName());
+			MongoClient client 							= mCon.getConnection();
+			MongoDatabase db 							= client.getDatabase(mCon.getMongoDBName());
 			int skip =0;
 			
 			int till = getBatchNos(totalRecords);
@@ -55,24 +52,21 @@ public class MongoDBReaderImpl implements MongoDBReader {
 			while(till>0){
 				
 				MongoCollection<Document> mCollection 	= db.getCollection(mCon.getMongoCollectionName());
-				FindIterable<Document>  documentsList = this.readFromMongoDB(mCollection, skip, batchSize>totalRecords?batchSize:totalRecords);
-				MongoCursor<Document> result = documentsList.iterator();
-				Set<UserSolrDocument> userSolrItr = new HashSet<UserSolrDocument>();
+				FindIterable<Document>  documentsList 	= this.readFromMongoDB(mCollection, skip, batchSize);
+				MongoCursor<Document> result 			= documentsList.iterator();
+				Set<UserSolrDocument> userSolrItr 		= new HashSet<UserSolrDocument>();
+				
 				while(result.hasNext()){
-					Document doc = result.next();
-					UserSolrDocument userSolrDoc =  mapper.map(doc);
+					Document doc 				 		= result.next();
+					UserSolrDocument userSolrDoc 		=  mapper.map(doc);
 					userSolrItr.add(userSolrDoc);
 				}
-				userRepo.save(userSolrItr);
 				skip = skip + batchSize;
 				till--;
 			}
-		}catch(MongoDBReaderException e){
-			e.printStackTrace();
-			throw new MongoDBReaderException(ErrorCode.READ_FAILED, "Mongodb to Solr export failed", e.getMessage(), e);
 		}catch(Exception e){
 			e.printStackTrace();
-			throw new MongoDBExporterException(ErrorCode.SAVE_OR_UPDATE_FAILED, "Mongodb to Solr export failed", e.getMessage(), e);
+			throw new Exception("Mongodb to Solr export failed");
 		}
 		
 		
