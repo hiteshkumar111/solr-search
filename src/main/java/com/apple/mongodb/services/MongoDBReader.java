@@ -1,13 +1,12 @@
 package com.apple.mongodb.services;
 
-import org.bson.Document;
+import org.springframework.data.domain.Page;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
+import com.apple.mongodb.entity.User;
 
 public interface MongoDBReader {
 
-	public FindIterable<Document> readFromMongoDB(MongoCollection<Document> collection, Integer pageNo, Integer pageSize) throws Exception;
+	public Page<User> readFromMongoDB( Integer currentPage, Integer pageSize) throws Exception;
 
 	public void exec(Integer totalRecords) throws Exception;
 	

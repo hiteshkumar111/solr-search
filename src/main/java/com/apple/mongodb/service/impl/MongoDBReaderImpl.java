@@ -1,28 +1,26 @@
 package com.apple.mongodb.service.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.apple.entity.UserSolrDocument;
 import com.apple.mapper.UserMapper;
-import com.apple.mongodb.importer.MongoDBConnection;
+import com.apple.mongodb.entity.User;
+import com.apple.mongodb.repos.UserMongoRepository;
 import com.apple.mongodb.services.MongoDBReader;
 import com.apple.repos.UserSolrDocRepository;
-import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 
 @Service
 public class MongoDBReaderImpl implements MongoDBReader {
 	
 	@Autowired
-	private MongoDBConnection mCon;
+	private UserMongoRepository userMongoRepo;
 	
 	@Autowired
 	UserSolrDocRepository userRepo;
@@ -32,37 +30,39 @@ public class MongoDBReaderImpl implements MongoDBReader {
 	
 	private final int batchSize = 500;
 
-	public FindIterable<Document> readFromMongoDB(MongoCollection<Document> collection, Integer skip, Integer pageSize) {
-		return collection.find().skip(skip).limit(pageSize);
+	@Override
+	public Page<User> readFromMongoDB(Integer pageNo, Integer pageSize) {
+		return userMongoRepo.findAll(new PageRequest(pageNo, pageSize));
 	}
 
 	@Override
 	public void exec(Integer totalRecords) throws Exception {
 		
 		try{
-			MongoClient client 							= mCon.getConnection();
-			MongoDatabase db 							= client.getDatabase(mCon.getMongoDBName());
-			int skip =0;
+			int currentPage = 0;
 			
 			int till = getBatchNos(totalRecords);
+			
 			if(till<0){
 				return;
 			}
 			
 			while(till>0){
 				
-				MongoCollection<Document> mCollection 	= db.getCollection(mCon.getMongoCollectionName());
-				FindIterable<Document>  documentsList 	= this.readFromMongoDB(mCollection, skip, batchSize);
-				MongoCursor<Document> result 			= documentsList.iterator();
+				Page<User> users = this.readFromMongoDB(currentPage, batchSize);
+				List<User> usersList = users.getContent();
+				
 				Set<UserSolrDocument> userSolrItr 		= new HashSet<UserSolrDocument>();
 				
-				while(result.hasNext()){
-					Document doc 				 		= result.next();
-					UserSolrDocument userSolrDoc 		=  mapper.map(doc);
+				for(User user: usersList){
+					UserSolrDocument userSolrDoc 		=  mapper.map(user);
 					userSolrItr.add(userSolrDoc);
 				}
-				skip = skip + batchSize;
+				
+				userRepo.save(userSolrItr);
+				
 				till--;
+				currentPage++;
 			}
 		}catch(Exception e){
 			e.printStackTrace();

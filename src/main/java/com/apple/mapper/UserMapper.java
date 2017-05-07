@@ -1,14 +1,12 @@
 package com.apple.mapper;
 
-import java.util.Date;
-
-import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import com.apple.dtos.UserDTO;
 import com.apple.dtos.UserProfileDTO;
 import com.apple.dtos.request.UserRequestDTO;
 import com.apple.entity.UserSolrDocument;
+import com.apple.mongodb.entity.User;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,33 +46,19 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 		return userSolrDoc;
 	}
 
-	public UserSolrDocument map(Document doc) {
+
+	public UserSolrDocument map(User user) {
 		UserSolrDocument userSolrDoc = new UserSolrDocument();
 		ObjectMapper mapper 	= new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		UserProfileDTO profile 	=  mapper.convertValue(doc.get("profile"), UserProfileDTO.class);
-		
+		UserProfileDTO profile 	=  mapper.convertValue(user.getUserProfileMongo(), UserProfileDTO.class);
 		if(null!=profile){
 			userSolrDoc			= convertToUserSolrDoc(profile, userSolrDoc);
-		}else{
-			userSolrDoc.setBio(doc.getString("bio"));
-			userSolrDoc.setCompany(doc.getString("company"));
-			userSolrDoc.setExpertise(doc.getString("expertise"));
-			userSolrDoc.setLocation(doc.getString("expertise"));
-			userSolrDoc.setOccupation(doc.getString("occupation"));
-			userSolrDoc.setTitle(doc.getString("title"));
-			userSolrDoc.setUrl(doc.getString("url"));
 		}
-		
-		userSolrDoc.setId(doc.getLong("id")+"");
-		userSolrDoc.setNickname(doc.getString("nickname"));
-		userSolrDoc.setAvatarId(doc.getString("avtarId"));
-		
-		Date memberSince 		= null;
-		if(null!=doc.getLong("memberSince")){
-			memberSince 		= new Date(doc.getLong("memberSince"));
-		}
-		userSolrDoc.setMemberSince(memberSince);
+		userSolrDoc.setId(user.getId());
+		userSolrDoc.setNickname(user.getNickname());
+		userSolrDoc.setAvatarId(user.getAvatarId());
+		userSolrDoc.setMemberSince(user.getMemberSince());
 		return userSolrDoc;
 	}
 	
