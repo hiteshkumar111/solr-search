@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class SolrSearchServiceImpl implements SolrSearchService {
 
 
 		String searchKeyword = searchRequest.getSearchText();
-		return searchRepo.findByQueryAnnotation(searchKeyword);
-
+		Sort sort = new Sort(Sort.Direction.DESC, "membersince");
+		return searchRepo.findByNickname(searchKeyword, sort);
 		
 	}
 
