@@ -1,10 +1,13 @@
 package com.apple.dtos;
 
+import java.util.Date;
+
 public class UserDTO {
 
 	private String id;
 	private String nickname;
 	private String avatarId;
+	private Date memberSince;
 	
 
 	public String getId() {
@@ -31,6 +34,14 @@ public class UserDTO {
 		this.avatarId = avatarId;
 	}
 
+	public Date getMemberSince() {
+		return memberSince;
+	}
+
+	public void setMemberSince(Date memberSince) {
+		this.memberSince = memberSince;
+	}
+	
 }
 
 

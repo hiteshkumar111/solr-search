@@ -14,31 +14,24 @@ public class UserSolrDocument {
 	@Indexed(name = "id", type = "string")
 	private String id;
 
-	@Indexed(name = "bio", type = "string")
 	@Field("bio")
 	private String bio;
 
-	@Indexed(name = "company", type = "string")
 	@Field("company")
 	private String company;
 
-	@Indexed(name = "expertise", type = "string")
 	@Field("expertise")
 	private String expertise;
 
-	@Indexed(name = "location", type = "string")
 	@Field("location")
 	private String location;
 
-	@Indexed(name = "occupation", type = "string")
 	@Field("occupation")
 	private String occupation;
 
-	@Indexed(name = "title", type = "string")
 	@Field("title")
 	private String title;
 
-	@Indexed(name = "url", type = "string")
 	@Field("url")
 	private String url;
 
@@ -46,7 +39,6 @@ public class UserSolrDocument {
 	@Field("name")
 	private String nickname;
 
-	@Indexed(name = "avatarid", type = "string")
 	@Field("avatarid")
 	private String avatarId;
 

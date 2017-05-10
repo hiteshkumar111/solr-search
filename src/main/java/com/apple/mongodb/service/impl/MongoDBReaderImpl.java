@@ -4,7 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import com.apple.mongodb.services.MongoDBReader;
 import com.apple.repos.UserSolrDocRepository;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class MongoDBReaderImpl implements MongoDBReader {
 	
 	@Autowired
@@ -28,8 +34,18 @@ public class MongoDBReaderImpl implements MongoDBReader {
 	@Autowired
 	UserMapper mapper;
 	
-	private final int batchSize = 500;
+	static final String batchSizeProp = "mongodb.export.batchsize";
 
+	@Resource
+	private Environment environment;
+	
+	private int batchSize;
+	
+	@PostConstruct
+	public void init(){
+		this.batchSize =  Integer.parseInt(environment.getRequiredProperty(batchSizeProp));
+	}
+	
 	@Override
 	public Page<User> readFromMongoDB(Integer pageNo, Integer pageSize) {
 		return userMongoRepo.findAll(new PageRequest(pageNo, pageSize));
@@ -49,8 +65,12 @@ public class MongoDBReaderImpl implements MongoDBReader {
 			
 			while(till>0){
 				
-				Page<User> users = this.readFromMongoDB(currentPage, batchSize);
+				Page<User> users = this.readFromMongoDB(currentPage, this.batchSize);
 				List<User> usersList = users.getContent();
+				
+				if(null==usersList || usersList.isEmpty()){
+					break;
+				}
 				
 				Set<UserSolrDocument> userSolrItr 		= new HashSet<UserSolrDocument>();
 				
@@ -58,8 +78,9 @@ public class MongoDBReaderImpl implements MongoDBReader {
 					UserSolrDocument userSolrDoc 		=  mapper.map(user);
 					userSolrItr.add(userSolrDoc);
 				}
-				
-				userRepo.save(userSolrItr);
+				if(!userSolrItr.isEmpty()){
+					userRepo.save(userSolrItr);
+				}
 				
 				till--;
 				currentPage++;
@@ -75,18 +96,26 @@ public class MongoDBReaderImpl implements MongoDBReader {
 	}
 	
 	private int getBatchNos(int totalRecords){
-		if(totalRecords<=batchSize){
+		
+		if(totalRecords<=this.batchSize){
 			return 1;
 		}else{
-			int till = totalRecords/batchSize;
-			if(totalRecords%batchSize==0){
+			int till = totalRecords/this.batchSize;
+			if(totalRecords%this.batchSize==0){
 				return till;
 			}else{
 				return till+1;
 			}
 		}
 	}
-	
+
+	public int getBatchSize() {
+		return batchSize;
+	}
+
+	public void setBatchSize(int batchSize) {
+		this.batchSize = batchSize;
+	}
 	
 
 }

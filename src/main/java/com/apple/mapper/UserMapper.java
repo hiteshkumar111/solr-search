@@ -1,5 +1,7 @@
 package com.apple.mapper;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 import com.apple.dtos.UserDTO;
@@ -32,6 +34,11 @@ public class UserMapper extends ConfigurableMapper implements Imapper {
 		userSolrDoc.setAvatarId(userDto.getAvatarId());
 		userSolrDoc.setId(userDto.getId());
 		userSolrDoc.setNickname(userDto.getNickname());
+		if(null==userDto.getMemberSince()){
+			userDto.setMemberSince(new Date());
+		}
+		
+		userSolrDoc.setMemberSince(userDto.getMemberSince());
 		return userSolrDoc;
 	}
 
