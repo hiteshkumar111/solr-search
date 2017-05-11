@@ -25,9 +25,15 @@ public class SolrSearchServiceImpl implements SolrSearchService {
 
 	public List<UserSolrDocument> search(SearchRequestDTO searchRequest) {
 
-
 		String searchKeyword = searchRequest.getSearchText();
-		Sort sort = new Sort(Sort.Direction.DESC, "membersince");
+		Sort sort = null;
+		
+		if(searchRequest.getDirection()==Sort.Direction.ASC){
+			 sort = new Sort(Sort.Direction.ASC, searchRequest.getSortByField());
+		}else {
+			sort = new Sort(Sort.Direction.DESC, searchRequest.getSortByField());
+		}
+		
 		return searchRepo.findByNickname(searchKeyword, sort);
 		
 	}

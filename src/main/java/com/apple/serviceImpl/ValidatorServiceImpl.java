@@ -24,6 +24,9 @@ public class ValidatorServiceImpl implements ValidatorService {
 		if (searchRequest == null) {
 			throw new Exception("Request Object cannot be null");
 		}
+		if(null==searchRequest.getSortByField()){
+			searchRequest.setSortByField("name");
+		}
 	}
 
 	@Override

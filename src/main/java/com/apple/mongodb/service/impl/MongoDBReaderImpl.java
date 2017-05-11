@@ -86,7 +86,6 @@ public class MongoDBReaderImpl implements MongoDBReader {
 				currentPage++;
 			}
 		}catch(Exception e){
-			e.printStackTrace();
 			throw new Exception("Mongodb to Solr export failed");
 		}
 		

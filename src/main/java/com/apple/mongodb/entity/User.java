@@ -1,12 +1,10 @@
 package com.apple.mongodb.entity;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "UserDetails")
+@Document(collection = "users")
 public class User {
 	
 	@Id
@@ -17,7 +15,7 @@ public class User {
 	
 	private String nickname;
 	private String avatarId;
-	private Date memberSince;
+	private Long memberSince;
 
 	@Field("profile")
 	private UserProfileMongo userProfileMongo;
@@ -54,11 +52,11 @@ public class User {
 		this.avatarId = avatarId;
 	}
 
-	public Date getMemberSince() {
+	public Long getMemberSince() {
 		return memberSince;
 	}
 
-	public void setMemberSince(Date memberSince) {
+	public void setMemberSince(Long memberSince) {
 		this.memberSince = memberSince;
 	}
 
