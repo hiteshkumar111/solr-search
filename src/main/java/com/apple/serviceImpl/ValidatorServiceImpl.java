@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.apple.dtos.TagsDTO;
 import com.apple.dtos.UserDTO;
 import com.apple.dtos.UserProfileDTO;
 import com.apple.dtos.request.SearchRequestDTO;
+import com.apple.entity.Tags;
 import com.apple.entity.UserSolrDocument;
+import com.apple.repos.TagsRepository;
 import com.apple.repos.UserSolrDocRepository;
 import com.apple.services.ValidatorService;
 
@@ -18,6 +21,9 @@ public class ValidatorServiceImpl implements ValidatorService {
 
 	@Autowired
 	private UserSolrDocRepository userRepo;
+	
+	@Autowired
+	private TagsRepository tagsRepo;
 
 	@Override
 	public void validateSearchRequest(SearchRequestDTO searchRequest) throws Exception {
@@ -77,5 +83,21 @@ public class ValidatorServiceImpl implements ValidatorService {
 
 		return solrDoc;
 
+	}
+
+	@Override
+	public void validateTagsSaveRequest(TagsDTO tags) throws Exception{
+		if (null == tags) {
+			throw new Exception( "Request Failed: Empty request recieved");
+		}
+		
+		if (null == tags.getId()) {
+			throw new Exception("Required filed missing : Id");
+		}
+
+		Tags tag = tagsRepo.findOne(tags.getId());
+		if (null != tag) {
+			throw new Exception("Request Failed: Invalid Id or Id already exists");
+		}
 	}
 }
