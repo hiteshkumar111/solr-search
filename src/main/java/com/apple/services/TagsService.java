@@ -14,4 +14,6 @@ public interface TagsService {
 
 	Tags findParentByChildId(String id);
 
+	List<Tags> findByName(String name);
+
 }

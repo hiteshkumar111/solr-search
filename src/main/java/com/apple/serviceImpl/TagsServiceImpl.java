@@ -36,4 +36,9 @@ public class TagsServiceImpl implements TagsService {
 		return repo.findTagsWhereChildrenIdsContains(id);
 	}
 
+	@Override
+	public List<Tags> findByName(String name) {
+		return repo.findByName(name);
+	}
+
 }

@@ -1,15 +1,11 @@
 package com.apple.entity;
 
+import java.util.List;
+
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
-
-import java.util.Date;
-import java.util.List;
-
-//{"id":1,"name":"name","slug":"slug","description":"description",
-//"type":"GENERIC_TAG","parentId":2,"childrenIds":[3,4],"state":"ACTIVE”}
 
 @SolrDocument(solrCoreName = "tagsCore")
 public class Tags {
@@ -17,6 +13,10 @@ public class Tags {
 	@Id
 	@Indexed(name = "id", type = "string")
 	private String id;
+	
+	@Field("name")
+	@Indexed(name="name", type = "string", searchable = true)
+	private String name;
 
 	@Field("type")
 	private String type;
@@ -37,12 +37,6 @@ public class Tags {
 
 	@Field("state")
 	private Boolean state;
-
-
-	@Indexed(name = "created_at", type = "date")
-	@Field("created_at")
-	private Date createdAt;
-
 
 	public String getId() {
 		return id;
@@ -100,15 +94,12 @@ public class Tags {
 		this.state = state;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public String getName() {
+		return name;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 	
-	
-
 }

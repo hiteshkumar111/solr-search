@@ -1,6 +1,5 @@
 package com.apple.dtos;
 
-import java.util.Date;
 import java.util.List;
 
 public class TagsDTO {
@@ -12,7 +11,7 @@ public class TagsDTO {
 	private String parentId;
 	private List<String> childrenIds;
 	private Boolean state;
-	private Date createdAt;
+	private String name;
 
 
 	public String getId() {
@@ -71,15 +70,12 @@ public class TagsDTO {
 		this.state = state;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public String getName() {
+		return name;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	
-	
 
 }

@@ -13,15 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apple.dtos.TagsDTO;
-import com.apple.dtos.UserDTO;
-import com.apple.dtos.UserProfileDTO;
 import com.apple.entity.Tags;
-import com.apple.entity.UserSolrDocument;
 import com.apple.mapper.UserMapper;
 import com.apple.services.TagsService;
-import com.apple.services.UserService;
 import com.apple.services.ValidatorService;
-import com.mongodb.Tag;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -56,6 +51,14 @@ public class TagsController {
 	public ResponseEntity<TagsDTO> findTagById(@PathVariable("id") String id) throws Exception {
 		return new ResponseEntity<TagsDTO>(mapper.map(tagsService.findById(id), TagsDTO.class), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "find tags by id", notes = "", response = Object.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
+	@RequestMapping(value = "/name/{name}", consumes = { "*/*" }, method = RequestMethod.GET)
+	public ResponseEntity<List<TagsDTO>> findTagByName(@PathVariable("name") String name) throws Exception {
+		return new ResponseEntity<List<TagsDTO>>(mapper.mapAsList(tagsService.findByName(name), TagsDTO.class), HttpStatus.OK);
+	}
+
 
 	@ApiOperation(value = "find all child where parent id", notes = "", response = Object.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Object.class) })
