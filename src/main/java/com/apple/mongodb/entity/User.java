@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class User {
 	
 	@Id
-	private String _id;
-
-	@Field("id")
 	private String id;
 	
 	private String nickname;
@@ -60,12 +57,4 @@ public class User {
 		this.memberSince = memberSince;
 	}
 
-	public String get_id() {
-		return _id;
-	}
-
-	public void set_id(String _id) {
-		this._id = _id;
-	}
-	
 }

@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 import com.apple.mongodb.entity.User;
 
-public interface MongoDBReader {
+public interface MongoDBUserReader {
 
 	public Page<User> readFromMongoDB( Integer currentPage, Integer pageSize) throws Exception;
 

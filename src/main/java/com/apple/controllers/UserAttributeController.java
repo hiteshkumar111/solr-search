@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/v1/users")
 @PropertySource("classpath:application.properties")
 public class UserAttributeController {
 

@@ -12,8 +12,9 @@ public interface TagsService {
 
 	List<Tags> findByParentId(String id);
 
-	Tags findParentByChildId(String id);
-
 	List<Tags> findByName(String name);
+
+
+	Iterable<Tags> findAll(Integer pageSize, Integer pageNo);
 
 }

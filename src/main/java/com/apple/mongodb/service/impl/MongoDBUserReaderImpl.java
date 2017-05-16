@@ -18,12 +18,12 @@ import com.apple.entity.UserSolrDocument;
 import com.apple.mapper.UserMapper;
 import com.apple.mongodb.entity.User;
 import com.apple.mongodb.repos.UserMongoRepository;
-import com.apple.mongodb.services.MongoDBReader;
+import com.apple.mongodb.services.MongoDBUserReader;
 import com.apple.repos.UserSolrDocRepository;
 
 @Service
 @PropertySource("classpath:application.properties")
-public class MongoDBReaderImpl implements MongoDBReader {
+public class MongoDBUserReaderImpl implements MongoDBUserReader {
 	
 	@Autowired
 	private UserMongoRepository userMongoRepo;

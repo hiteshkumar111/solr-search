@@ -3,6 +3,8 @@ package com.apple.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.apple.entity.Tags;
@@ -14,7 +16,7 @@ public class TagsServiceImpl implements TagsService {
 
 	@Autowired
 	private TagsRepository repo;
-	
+
 	@Override
 	public Tags save(Tags tag) {
 		repo.save(tag);
@@ -32,13 +34,30 @@ public class TagsServiceImpl implements TagsService {
 	}
 
 	@Override
-	public Tags findParentByChildId(String id) {
-		return repo.findTagsWhereChildrenIdsContains(id);
-	}
-
-	@Override
 	public List<Tags> findByName(String name) {
 		return repo.findByName(name);
+	}
+
+
+	@Override
+	public Iterable<Tags> findAll(Integer pageSize, Integer pageNo) {
+		
+		if(pageSize!=null && pageNo!=null){
+			
+			if(pageNo>0){
+				pageNo = pageNo - 1;
+			}
+			
+			Page<Tags> tagsPage = repo.findAll(new PageRequest(pageNo, pageSize));
+			if(tagsPage!=null){
+				return tagsPage.getContent();
+			}else{
+				return null;
+			}
+			
+		}
+		
+		return repo.findAll();
 	}
 
 }

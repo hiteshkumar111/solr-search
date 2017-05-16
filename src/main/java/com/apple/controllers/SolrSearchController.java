@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/v1")
 public class SolrSearchController {
 
     @Autowired
